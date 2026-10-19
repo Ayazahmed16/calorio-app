@@ -4,36 +4,36 @@
 {% block content %}
 <div class="mb-10">
     <p class="font-mono text-[10px] uppercase tracking-widest text-neutral-500 mb-2">Targets</p>
-    <h2 class="text-4xl md:text-5xl font-black tracking-tighter text-neutral-900">Calorie Calculator</h2>
+    <h2 class="text-4xl md:text-5xl font-black tracking-tighter text-white">Calorie Calculator</h2>
 </div>
 
 <div class="grid grid-cols-1 lg:grid-cols-2 gap-6">
-    <form method="post" class="bg-[#ffffff] p-8 border border-black/15 shadow-sm">
+    <form method="post" class="bg-[#141414] p-8 border border-white/10 shadow-2xl">
         {% csrf_token %}
         {% for field in form %}
         <div class="mb-5">
             <label class="lbl" for="{{ field.id_for_label }}">{{ field.label }}</label>{{ field }}
-            {% if field.errors %}<p class="mt-2 font-mono text-xs text-red-600">{{ field.errors.0 }}</p>{% endif %}
+            {% if field.errors %}<p class="mt-2 font-mono text-xs text-red-400">{{ field.errors.0 }}</p>{% endif %}
         </div>
         {% endfor %}
-        <button type="submit" class="px-12 py-4 bg-neutral-900 text-white font-bold hover:bg-neutral-700 transition-all active:scale-95 cursor-pointer">Calculate</button>
+        <button type="submit" class="px-12 py-4 bg-white text-black font-bold hover:bg-neutral-200 transition-all active:scale-95 cursor-pointer">Calculate</button>
     </form>
 
-    <div class="bg-[#ffffff] p-8 border border-black/15 shadow-sm h-fit">
+    <div class="bg-[#141414] p-8 border border-white/10 shadow-2xl h-fit">
         {% if result %}
         <p class="font-mono text-[10px] uppercase tracking-widest text-neutral-500 mb-6">Suggested daily targets</p>
         <div class="grid grid-cols-2 gap-6 mb-8">
-            <div><div class="font-mono text-[10px] uppercase tracking-widest text-neutral-500">Calories</div><div class="text-4xl font-black text-neutral-900 mt-2">{{ result.calories }}</div></div>
-            <div><div class="font-mono text-[10px] uppercase tracking-widest text-neutral-500">Protein</div><div class="text-4xl font-black text-neutral-900 mt-2">{{ result.protein }}<span class="text-lg text-neutral-600 ml-1">g</span></div></div>
-            <div><div class="font-mono text-[10px] uppercase tracking-widest text-neutral-500">Water</div><div class="text-2xl font-black text-neutral-900 mt-2">{{ result.water_ml }}<span class="text-sm text-neutral-600 ml-1">ml</span></div></div>
-            <div><div class="font-mono text-[10px] uppercase tracking-widest text-neutral-500">Maintenance (TDEE)</div><div class="text-2xl font-black text-neutral-900 mt-2">{{ result.tdee }}</div></div>
+            <div><div class="font-mono text-[10px] uppercase tracking-widest text-neutral-500">Calories</div><div class="text-4xl font-black text-white mt-2">{{ result.calories }}</div></div>
+            <div><div class="font-mono text-[10px] uppercase tracking-widest text-neutral-500">Protein</div><div class="text-4xl font-black text-white mt-2">{{ result.protein }}<span class="text-lg text-neutral-400 ml-1">g</span></div></div>
+            <div><div class="font-mono text-[10px] uppercase tracking-widest text-neutral-500">Water</div><div class="text-2xl font-black text-white mt-2">{{ result.water_ml }}<span class="text-sm text-neutral-400 ml-1">ml</span></div></div>
+            <div><div class="font-mono text-[10px] uppercase tracking-widest text-neutral-500">Maintenance (TDEE)</div><div class="text-2xl font-black text-white mt-2">{{ result.tdee }}</div></div>
         </div>
         <p class="font-mono text-[10px] text-neutral-500 mb-6">Resting metabolism (BMR): {{ result.bmr }} kcal. Based on the Mifflin-St Jeor equation. This is an estimate, not medical advice.</p>
         <form method="post">
             {% csrf_token %}
             {% for field in form %}<input type="hidden" name="{{ field.html_name }}" value="{{ field.value }}">{% endfor %}
             <input type="hidden" name="apply" value="1">
-            <button type="submit" class="px-8 py-3 bg-neutral-900 text-white font-bold hover:bg-neutral-700 transition-all active:scale-95 cursor-pointer">Apply to my goals</button>
+            <button type="submit" class="px-8 py-3 bg-white text-black font-bold hover:bg-neutral-200 transition-all active:scale-95 cursor-pointer">Apply to my goals</button>
         </form>
         {% else %}
         <p class="font-mono text-xs text-neutral-500 leading-relaxed">Fill in the form to get a suggested daily calorie, protein and water target based on your body and goal. You can apply it to your goals with one click.</p>

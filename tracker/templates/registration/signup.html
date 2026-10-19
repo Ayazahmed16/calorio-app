@@ -1,14 +1,14 @@
 {% extends "base.html" %}
 {% block title %}Sign up{% endblock %}
 {% block auth %}
-<div class="bg-[#ffffff] p-8 border border-black/15 shadow-sm rounded-sm w-full max-w-md">
+<div class="bg-[#141414] p-8 border border-white/10 shadow-2xl rounded-sm w-full max-w-md">
     <p class="font-mono text-[10px] uppercase tracking-widest text-neutral-500 mb-2">Create account</p>
-    <h2 class="text-4xl font-black tracking-tighter text-neutral-900 mb-8">Sign Up</h2>
+    <h2 class="text-4xl font-black tracking-tighter text-white mb-8">Sign Up</h2>
     <form method="post" class="auth-form">
         {% csrf_token %}
         {{ form.as_p }}
-        <button type="submit" class="w-full mt-2 px-12 py-4 bg-neutral-900 text-white font-bold hover:bg-neutral-700 transition-all active:scale-95 cursor-pointer">Create Account</button>
+        <button type="submit" class="w-full mt-2 px-12 py-4 bg-white text-black font-bold hover:bg-neutral-200 transition-all active:scale-95 cursor-pointer">Create Account</button>
     </form>
-    <p class="mt-6 text-center font-mono text-xs text-neutral-500">Already have an account? <a href="{% url 'login' %}" class="text-neutral-800 hover:underline">Log in</a></p>
+    <p class="mt-6 text-center font-mono text-xs text-neutral-500">Already have an account? <a href="{% url 'login' %}" class="text-neutral-200 hover:underline">Log in</a></p>
 </div>
 {% endblock %}
