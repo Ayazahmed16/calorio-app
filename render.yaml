@@ -1,0 +1,42 @@
+# Render Blueprint: New > Blueprint > pick this repo. Creates the web service and a Postgres database.
+databases:
+  - name: calorio-db
+    plan: free
+    databaseName: calorio
+    user: calorio
+
+services:
+  - type: web
+    name: calorio
+    runtime: python
+    plan: free
+    buildCommand: >-
+      pip install -r requirements.txt
+      && python manage.py collectstatic --no-input
+      && python manage.py migrate
+      && (python manage.py createsuperuser --no-input || true)
+    startCommand: gunicorn calorio.wsgi:application
+    healthCheckPath: /
+    envVars:
+      - key: PYTHON_VERSION
+        value: 3.13.5
+      - key: DJANGO_DEBUG
+        value: "0"
+      - key: DJANGO_SECRET_KEY
+        generateValue: true
+      - key: DATABASE_URL
+        fromDatabase:
+          name: calorio-db
+          property: connectionString
+      - key: DJANGO_TIME_ZONE
+        value: UTC            # change to your zone, e.g. Asia/Kolkata
+      # Admin account created during the build (set these in the Render dashboard; they are not stored in git)
+      - key: DJANGO_SUPERUSER_USERNAME
+        sync: false
+      - key: DJANGO_SUPERUSER_EMAIL
+        sync: false
+      - key: DJANGO_SUPERUSER_PASSWORD
+        sync: false
+      # Optional integrations
+      - key: USDA_API_KEY
+        sync: false

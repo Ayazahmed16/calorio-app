@@ -16,3 +16,6 @@ db.sqlite3
 .idea/
 .DS_Store
 Thumbs.db
+
+# Collected static files (built on deploy)
+staticfiles/
