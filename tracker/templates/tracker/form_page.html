@@ -3,19 +3,19 @@
 {% block crumb %}{{ crumb }}{% endblock %}
 {% block content %}
 <div class="mb-10">
-    <p class="font-mono text-[10px] uppercase tracking-widest text-cyan-100/40 mb-2">{{ eyebrow }}</p>
-    <h2 class="text-5xl font-black tracking-tighter text-white">{{ title }}</h2>
+    <p class="font-mono text-[10px] uppercase tracking-widest text-neutral-500 mb-2">{{ eyebrow }}</p>
+    <h2 class="text-5xl font-black tracking-tighter text-neutral-900">{{ title }}</h2>
 </div>
 
 {% if lookup %}
-<div class="bg-[#0f1d20] p-6 border border-white/10 shadow-2xl rounded-sm max-w-2xl mb-6">
-    <p class="font-mono text-[10px] uppercase tracking-widest text-cyan-100/40 mb-3">Find a food online (Open Food Facts)</p>
+<div class="bg-[#ffffff] p-6 border border-black/15 shadow-sm rounded-sm max-w-2xl mb-6">
+    <p class="font-mono text-[10px] uppercase tracking-widest text-neutral-500 mb-3">Find a food online (Open Food Facts)</p>
     <div class="flex gap-3 mb-3">
         <input id="lk-q" type="search" placeholder="Search by name or paste a barcode..." class="field" autocomplete="off">
-        <button type="button" id="lk-go" class="px-6 bg-cyan-500 text-black font-bold text-sm hover:bg-cyan-400 cursor-pointer shrink-0">Search</button>
+        <button type="button" id="lk-go" class="px-6 bg-neutral-900 text-white font-bold text-sm hover:bg-neutral-700 cursor-pointer shrink-0">Search</button>
     </div>
-    <p id="lk-status" class="font-mono text-[11px] text-cyan-100/40"></p>
-    <ul id="lk-results" class="mt-2 divide-y divide-white/5"></ul>
+    <p id="lk-status" class="font-mono text-[11px] text-neutral-500"></p>
+    <ul id="lk-results" class="mt-2 divide-y divide-black/10"></ul>
 </div>
 <script>
 (function () {
@@ -32,10 +32,10 @@
             data.results.forEach(f => {
                 const li = document.createElement('li'); li.className = 'py-3';
                 const b = document.createElement('button'); b.type = 'button';
-                b.className = 'w-full text-left flex items-center gap-3 hover:text-cyan-400 text-white cursor-pointer';
+                b.className = 'w-full text-left flex items-center gap-3 hover:text-neutral-800 text-neutral-900 cursor-pointer';
                 const n = document.createElement('span'); n.textContent = f.name; n.className = 'text-sm flex-1 text-left';
                 const im = document.createElement('span'); im.className = 'ft'; im.style.cssText = 'width:32px;height:32px'; if (f.image && /^https:\/\//.test(f.image)) { const x = document.createElement('img'); x.src = f.image; x.alt = ''; x.referrerPolicy = 'no-referrer'; x.onerror = () => x.remove(); im.appendChild(x); } else { im.textContent = '\u{1F37D}\uFE0F'; im.style.fontSize = '18px'; }
-                const m = document.createElement('span'); m.className = 'font-mono text-[11px] text-cyan-100/60 shrink-0';
+                const m = document.createElement('span'); m.className = 'font-mono text-[11px] text-neutral-600 shrink-0';
                 m.textContent = f.calories + ' cal \u00b7 P' + f.protein + ' C' + f.carbs + ' F' + f.fat + (f.source ? ' \u00b7 ' + f.source : '');
                 b.append(im, n, m);
                 b.onclick = () => { set('id_name', f.name); set('id_calories', f.calories); set('id_protein', f.protein); set('id_carbs', f.carbs); set('id_fat', f.fat); set('id_barcode', f.barcode); set('id_image_url', f.image || ''); window.scrollTo({ top: document.querySelector('form[method=post]').offsetTop - 80, behavior: 'smooth' }); };
@@ -49,57 +49,57 @@
 </script>
 {% endif %}
 
-<form method="post" class="bg-[#0f1d20] p-8 border border-white/10 shadow-2xl rounded-sm max-w-2xl">
+<form method="post" class="bg-[#ffffff] p-8 border border-black/15 shadow-sm rounded-sm max-w-2xl">
     {% csrf_token %}
     {% if next %}<input type="hidden" name="next" value="{{ next }}">{% endif %}
     {% if hint %}
-    <div class="mb-6 border-l-2 border-cyan-500 bg-[#0f1d20] px-4 py-3 font-mono text-xs text-cyan-100/60">
-        {{ hint }} <a href="{{ hint_url }}" class="text-cyan-400 underline">{{ hint_label }}</a>
+    <div class="mb-6 border-l-2 border-white bg-[#ffffff] px-4 py-3 font-mono text-xs text-neutral-600">
+        {{ hint }} <a href="{{ hint_url }}" class="text-neutral-800 underline">{{ hint_label }}</a>
     </div>
     {% endif %}
     {% if quick_foods %}
     <div class="mb-6">
         <p class="lbl">Quick pick &mdash; favorites and recent</p>
         <div class="flex flex-wrap gap-2">
-            {% for q in quick_foods %}<a href="?food={{ q.food.id }}" class="px-3 py-1 border border-white/10 text-xs text-white hover:border-cyan-500/60 hover:text-cyan-400 transition-colors">{% if q.favorite %}&#9733; {% endif %}{{ q.food.name }}</a>{% endfor %}
+            {% for q in quick_foods %}<a href="?food={{ q.food.id }}" class="px-3 py-1 border border-black/15 text-xs text-neutral-900 hover:border-black/60 hover:text-neutral-800 transition-colors">{% if q.favorite %}&#9733; {% endif %}{{ q.food.name }}</a>{% endfor %}
         </div>
     </div>
     {% endif %}
     {% if form.non_field_errors %}
-    <div class="mb-6 border-l-2 border-red-500 bg-red-500/10 px-4 py-3 font-mono text-xs text-red-400">{{ form.non_field_errors.0 }}</div>
+    <div class="mb-6 border-l-2 border-red-500 bg-red-500/10 px-4 py-3 font-mono text-xs text-red-600">{{ form.non_field_errors.0 }}</div>
     {% endif %}
     {% for field in form %}
     <div class="mb-6">
         <label class="lbl" for="{{ field.id_for_label }}">{{ field.label }}</label>
         {{ field }}
-        {% if field.errors %}<p class="mt-2 font-mono text-xs text-red-400">{{ field.errors.0 }}</p>{% endif %}
+        {% if field.errors %}<p class="mt-2 font-mono text-xs text-red-600">{{ field.errors.0 }}</p>{% endif %}
     </div>
     {% endfor %}
     <div class="flex gap-4 mt-8">
-        <button type="submit" class="px-12 py-4 bg-cyan-500 text-black font-bold hover:bg-cyan-400 transition-all active:scale-95 cursor-pointer">{{ submit }}</button>
-        <a href="{{ cancel_url }}" class="px-8 py-4 border border-white/10 text-white font-bold hover:border-white/30 transition-all">Cancel</a>
+        <button type="submit" class="px-12 py-4 bg-neutral-900 text-white font-bold hover:bg-neutral-700 transition-all active:scale-95 cursor-pointer">{{ submit }}</button>
+        <a href="{{ cancel_url }}" class="px-8 py-4 border border-black/15 text-neutral-900 font-bold hover:border-black/30 transition-all">Cancel</a>
     </div>
 </form>
 {% if food_combo %}
 {{ food_data|json_script:"food-data" }}
 <style>
     .combo { position:relative; }
-    .combo-list { position:absolute; left:0; right:0; top:calc(100% + 4px); z-index:30; max-height:340px; overflow-y:auto; background:#13262a;
-                  border:1px solid rgba(6,182,212,.4); box-shadow:0 18px 40px rgba(0,0,0,.5); border-radius:2px; display:none; }
+    .combo-list { position:absolute; left:0; right:0; top:calc(100% + 4px); z-index:30; max-height:340px; overflow-y:auto; background:#ececec;
+                  border:1px solid rgba(0,0,0,.20); box-shadow:0 18px 40px rgba(0,0,0,.5); border-radius:2px; display:none; }
     .combo.open .combo-list { display:block; animation:fade-in .2s ease both; }
-    .combo-item { padding:.55rem 1rem; display:flex; align-items:center; gap:.75rem; font-family:'JetBrains Mono',monospace; font-size:.8rem; color:#e6f4f5; cursor:pointer; width:100%; text-align:left; }
-    .combo-item.active, .combo-item:hover { background:rgba(6,182,212,.18); color:#fff; }
-    .combo-item mark { background:none; color:#22d3ee; font-weight:700; }
-    .combo-item .meta { margin-left:auto; color:rgba(207,250,254,.5); font-size:.7rem; white-space:nowrap; }
-    .combo-head { padding:.5rem 1rem; font-family:'JetBrains Mono',monospace; font-size:.6rem; letter-spacing:.12em; text-transform:uppercase; color:rgba(207,250,254,.4); border-top:1px solid rgba(255,255,255,.08); }
-    .combo-new { color:#22d3ee; border-top:1px solid rgba(255,255,255,.08); }
-    .combo-empty { padding:.65rem 1rem; font-family:'JetBrains Mono',monospace; font-size:.75rem; color:rgba(207,250,254,.4); }
-    .combo-add { margin-left:.5rem; font-size:.65rem; color:#06b6d4; border:1px solid rgba(6,182,212,.5); padding:1px 8px; }
-    .food-preview { display:none; gap:1rem; align-items:center; margin-top:.9rem; padding:.9rem 1rem; background:#0a1214; border:1px solid rgba(6,182,212,.25); border-radius:4px; }
+    .combo-item { padding:.55rem 1rem; display:flex; align-items:center; gap:.75rem; font-family:'JetBrains Mono',monospace; font-size:.8rem; color:#111111; cursor:pointer; width:100%; text-align:left; }
+    .combo-item.active, .combo-item:hover { background:rgba(0,0,0,.18); color:#111; }
+    .combo-item mark { background:none; color:#2a2a2a; font-weight:700; }
+    .combo-item .meta { margin-left:auto; color:rgba(64,64,64,.5); font-size:.7rem; white-space:nowrap; }
+    .combo-head { padding:.5rem 1rem; font-family:'JetBrains Mono',monospace; font-size:.6rem; letter-spacing:.12em; text-transform:uppercase; color:rgba(64,64,64,.4); border-top:1px solid rgba(0,0,0,.08); }
+    .combo-new { color:#2a2a2a; border-top:1px solid rgba(0,0,0,.08); }
+    .combo-empty { padding:.65rem 1rem; font-family:'JetBrains Mono',monospace; font-size:.75rem; color:rgba(64,64,64,.4); }
+    .combo-add { margin-left:.5rem; font-size:.65rem; color:#111111; border:1px solid rgba(0,0,0,.20); padding:1px 8px; }
+    .food-preview { display:none; gap:1rem; align-items:center; margin-top:.9rem; padding:.9rem 1rem; background:#f5f5f5; border:1px solid rgba(0,0,0,.25); border-radius:4px; }
     .food-preview.show { display:flex; animation:fade-in .35s ease both; }
-    .food-preview .n { color:#fff; font-weight:600; }
-    .food-preview .m { font-family:'JetBrains Mono',monospace; font-size:.7rem; color:rgba(207,250,254,.55); margin-top:.15rem; }
-    .food-preview .t { font-family:'JetBrains Mono',monospace; font-size:.8rem; color:#22d3ee; margin-top:.35rem; }
+    .food-preview .n { color:#111; font-weight:600; }
+    .food-preview .m { font-family:'JetBrains Mono',monospace; font-size:.7rem; color:rgba(64,64,64,.55); margin-top:.15rem; }
+    .food-preview .t { font-family:'JetBrains Mono',monospace; font-size:.8rem; color:#2a2a2a; margin-top:.35rem; }
 </style>
 <script>
 (function () {

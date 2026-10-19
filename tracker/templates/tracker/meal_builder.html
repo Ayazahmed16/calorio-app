@@ -3,63 +3,63 @@
 {% block crumb %}Add Meal{% endblock %}
 {% block content %}
 <div class="mb-8">
-    <p class="font-mono text-[10px] uppercase tracking-widest text-cyan-100/40 mb-2">New Entry</p>
-    <h2 class="text-5xl font-black tracking-tighter text-white">Add a Meal</h2>
-    <p class="mt-3 text-sm text-cyan-100/60 max-w-xl">Build your plate by group. Add as many foods as you like under Protein, Carbs and Fats, then save them together as one meal.</p>
+    <p class="font-mono text-[10px] uppercase tracking-widest text-neutral-500 mb-2">New Entry</p>
+    <h2 class="text-5xl font-black tracking-tighter text-neutral-900">Add a Meal</h2>
+    <p class="mt-3 text-sm text-neutral-600 max-w-xl">Build your plate by group. Add as many foods as you like under Protein, Carbs and Fats, then save them together as one meal.</p>
 </div>
 
 <form method="post" id="meal-form" class="grid grid-cols-1 xl:grid-cols-3 gap-6 items-start">
     {% csrf_token %}
     <div class="xl:col-span-2 space-y-6">
 
-        <div class="bg-[#0f1d20] border border-white/10 p-6 grid grid-cols-1 sm:grid-cols-2 gap-5 shadow-2xl">
+        <div class="bg-[#ffffff] border border-black/15 p-6 grid grid-cols-1 sm:grid-cols-2 gap-5 shadow-sm">
             {% for field in header %}
             <div>
                 <label class="lbl" for="{{ field.id_for_label }}">{{ field.label }}</label>{{ field }}
-                {% if field.errors %}<p class="mt-2 font-mono text-xs text-red-400">{{ field.errors.0 }}</p>{% endif %}
+                {% if field.errors %}<p class="mt-2 font-mono text-xs text-red-600">{{ field.errors.0 }}</p>{% endif %}
             </div>
             {% endfor %}
         </div>
 
         {% if not has_foods %}
-        <div class="border-l-2 border-cyan-500 bg-[#0f1d20] px-4 py-3 font-mono text-xs text-cyan-100/60">No foods yet. <a href="{{ new_food_url }}" class="text-cyan-400 underline">Add your first food</a> to start logging.</div>
+        <div class="border-l-2 border-white bg-[#ffffff] px-4 py-3 font-mono text-xs text-neutral-600">No foods yet. <a href="{{ new_food_url }}" class="text-neutral-800 underline">Add your first food</a> to start logging.</div>
         {% endif %}
-        {% if error %}<div class="border-l-2 border-red-500 bg-red-500/10 px-4 py-3 font-mono text-xs text-red-400">{{ error }}</div>{% endif %}
+        {% if error %}<div class="border-l-2 border-red-500 bg-red-500/10 px-4 py-3 font-mono text-xs text-red-600">{{ error }}</div>{% endif %}
 
         {% for g in groups %}
-        <section data-group="{{ g.key }}" class="grp bg-[#0f1d20] border border-white/10 p-6 shadow-2xl">
+        <section data-group="{{ g.key }}" class="grp bg-[#ffffff] border border-black/15 p-6 shadow-sm">
             <div class="flex flex-wrap items-start justify-between gap-3 mb-4">
                 <div class="flex items-center gap-3">
                     <span class="grp-dot grp-{{ g.key }}"></span>
                     <div>
-                        <h3 class="text-lg font-bold text-white leading-none">{{ g.label }}</h3>
-                        <p class="font-mono text-[10px] text-cyan-100/40 mt-1">{{ g.hint }}</p>
+                        <h3 class="text-lg font-bold text-neutral-900 leading-none">{{ g.label }}</h3>
+                        <p class="font-mono text-[10px] text-neutral-500 mt-1">{{ g.hint }}</p>
                     </div>
                 </div>
-                <label class="flex items-center gap-2 font-mono text-[10px] uppercase tracking-widest text-cyan-100/50 cursor-pointer"><input type="checkbox" class="show-all accent-cyan-500"> All foods</label>
+                <label class="flex items-center gap-2 font-mono text-[10px] uppercase tracking-widest text-neutral-500 cursor-pointer"><input type="checkbox" class="show-all accent-neutral-900"> All foods</label>
             </div>
             <div class="rows space-y-3"></div>
             <div class="flex flex-wrap items-center gap-2 mt-4">
-                <button type="button" class="add-row px-4 py-2 border border-cyan-500/50 text-cyan-400 text-sm font-semibold hover:bg-cyan-500/10 cursor-pointer">+ Add food</button>
+                <button type="button" class="add-row px-4 py-2 border border-black/50 text-neutral-800 text-sm font-semibold hover:bg-black/8 cursor-pointer">+ Add food</button>
                 <span class="chips flex flex-wrap gap-2"></span>
             </div>
         </section>
         {% endfor %}
     </div>
 
-    <aside class="bg-[#0f1d20] border border-white/10 p-6 shadow-2xl xl:sticky xl:top-24">
-        <h3 class="text-lg font-bold text-white mb-1">Meal summary</h3>
-        <p id="sum-empty" class="font-mono text-[11px] text-cyan-100/40 mb-4">Pick a food and enter grams to see totals.</p>
-        <div class="text-5xl font-black tracking-tighter text-white"><span id="sum-cal">0</span><span class="text-lg text-cyan-100/50 ml-2">cal</span></div>
+    <aside class="bg-[#ffffff] border border-black/15 p-6 shadow-sm xl:sticky xl:top-24">
+        <h3 class="text-lg font-bold text-neutral-900 mb-1">Meal summary</h3>
+        <p id="sum-empty" class="font-mono text-[11px] text-neutral-500 mb-4">Pick a food and enter grams to see totals.</p>
+        <div class="text-5xl font-black tracking-tighter text-neutral-900"><span id="sum-cal">0</span><span class="text-lg text-neutral-500 ml-2">cal</span></div>
         <div class="grid grid-cols-3 gap-3 mt-5 mb-5 font-mono">
-            <div><div class="text-[10px] uppercase tracking-widest text-cyan-100/40">Protein</div><div class="text-white text-lg"><span id="sum-p">0</span>g</div></div>
-            <div><div class="text-[10px] uppercase tracking-widest text-cyan-100/40">Carbs</div><div class="text-white text-lg"><span id="sum-c">0</span>g</div></div>
-            <div><div class="text-[10px] uppercase tracking-widest text-cyan-100/40">Fat</div><div class="text-white text-lg"><span id="sum-f">0</span>g</div></div>
+            <div><div class="text-[10px] uppercase tracking-widest text-neutral-500">Protein</div><div class="text-neutral-900 text-lg"><span id="sum-p">0</span>g</div></div>
+            <div><div class="text-[10px] uppercase tracking-widest text-neutral-500">Carbs</div><div class="text-neutral-900 text-lg"><span id="sum-c">0</span>g</div></div>
+            <div><div class="text-[10px] uppercase tracking-widest text-neutral-500">Fat</div><div class="text-neutral-900 text-lg"><span id="sum-f">0</span>g</div></div>
         </div>
-        <div id="sum-bar" class="flex h-2 rounded-full overflow-hidden bg-white/10 mb-6"></div>
-        <ul id="sum-groups" class="space-y-1 mb-6 font-mono text-xs text-cyan-100/60"></ul>
-        <button type="submit" class="w-full px-8 py-4 bg-cyan-500 text-black font-bold hover:bg-cyan-400 transition-all active:scale-95 cursor-pointer">Save meal</button>
-        <a href="{% url 'meal_list' %}" class="block text-center mt-3 px-8 py-3 border border-white/10 text-white font-bold hover:border-white/30 transition-all">Cancel</a>
+        <div id="sum-bar" class="flex h-2 rounded-full overflow-hidden bg-black/8 mb-6"></div>
+        <ul id="sum-groups" class="space-y-1 mb-6 font-mono text-xs text-neutral-600"></ul>
+        <button type="submit" class="w-full px-8 py-4 bg-neutral-900 text-white font-bold hover:bg-neutral-700 transition-all active:scale-95 cursor-pointer">Save meal</button>
+        <a href="{% url 'meal_list' %}" class="block text-center mt-3 px-8 py-3 border border-black/15 text-neutral-900 font-bold hover:border-black/30 transition-all">Cancel</a>
     </aside>
 </form>
 
@@ -69,26 +69,26 @@
 
 <style>
     .grp-dot { width:10px; height:10px; border-radius:50%; display:inline-block; }
-    .grp-protein { background:#22d3ee; } .grp-carbs { background:#5eead4; } .grp-fats { background:#fbbf24; } .grp-other { background:#94a3b8; }
+    .grp-protein { background:#2a2a2a; } .grp-carbs { background:#6b6b6b; } .grp-fats { background:#9a9a9a; } .grp-other { background:#94a3b8; }
     .brow { display:grid; grid-template-columns:minmax(0,1fr) 110px 70px 32px; gap:.6rem; align-items:center; }
     @media (max-width:640px) { .brow { grid-template-columns:minmax(0,1fr) 32px; } .brow .combo { grid-column:1 / -1; } .brow .kcal { display:none; } }
-    .brow .kcal { font-family:'JetBrains Mono',monospace; font-size:.7rem; color:rgba(207,250,254,.55); text-align:right; }
-    .brow .rm { color:rgba(207,250,254,.4); cursor:pointer; font-size:1.2rem; line-height:1; }
-    .brow .rm:hover { color:#f87171; }
-    .berr { grid-column:1 / -1; font-family:'JetBrains Mono',monospace; font-size:.7rem; color:#f87171; }
+    .brow .kcal { font-family:'JetBrains Mono',monospace; font-size:.7rem; color:rgba(64,64,64,.55); text-align:right; }
+    .brow .rm { color:rgba(64,64,64,.4); cursor:pointer; font-size:1.2rem; line-height:1; }
+    .brow .rm:hover { color:#dc2626; }
+    .berr { grid-column:1 / -1; font-family:'JetBrains Mono',monospace; font-size:.7rem; color:#dc2626; }
     .brow-wrap { animation:fade-in .35s ease both; }
     .combo { position:relative; }
-    .combo-list { position:absolute; left:0; right:0; top:calc(100% + 4px); z-index:30; max-height:300px; overflow-y:auto; background:#13262a;
-                  border:1px solid rgba(6,182,212,.4); box-shadow:0 18px 40px rgba(0,0,0,.5); border-radius:2px; display:none; }
+    .combo-list { position:absolute; left:0; right:0; top:calc(100% + 4px); z-index:30; max-height:300px; overflow-y:auto; background:#ececec;
+                  border:1px solid rgba(0,0,0,.20); box-shadow:0 18px 40px rgba(0,0,0,.5); border-radius:2px; display:none; }
     .combo.open .combo-list { display:block; }
-    .combo-item { padding:.5rem .9rem; display:flex; align-items:center; gap:.7rem; font-family:'JetBrains Mono',monospace; font-size:.78rem; color:#e6f4f5; cursor:pointer; width:100%; text-align:left; }
-    .combo-item.active, .combo-item:hover { background:rgba(6,182,212,.18); color:#fff; }
-    .combo-item mark { background:none; color:#22d3ee; font-weight:700; }
-    .combo-item .meta { margin-left:auto; color:rgba(207,250,254,.5); font-size:.68rem; white-space:nowrap; }
-    .combo-new { color:#22d3ee; border-top:1px solid rgba(255,255,255,.08); }
-    .combo-empty { padding:.6rem .9rem; font-family:'JetBrains Mono',monospace; font-size:.72rem; color:rgba(207,250,254,.4); }
-    .chip { padding:.2rem .7rem; border:1px solid rgba(255,255,255,.1); font-size:.72rem; color:#e6f4f5; cursor:pointer; display:inline-flex; align-items:center; gap:.4rem; }
-    .chip:hover { border-color:rgba(6,182,212,.6); color:#22d3ee; }
+    .combo-item { padding:.5rem .9rem; display:flex; align-items:center; gap:.7rem; font-family:'JetBrains Mono',monospace; font-size:.78rem; color:#111111; cursor:pointer; width:100%; text-align:left; }
+    .combo-item.active, .combo-item:hover { background:rgba(0,0,0,.18); color:#111; }
+    .combo-item mark { background:none; color:#2a2a2a; font-weight:700; }
+    .combo-item .meta { margin-left:auto; color:rgba(64,64,64,.5); font-size:.68rem; white-space:nowrap; }
+    .combo-new { color:#2a2a2a; border-top:1px solid rgba(0,0,0,.08); }
+    .combo-empty { padding:.6rem .9rem; font-family:'JetBrains Mono',monospace; font-size:.72rem; color:rgba(64,64,64,.4); }
+    .chip { padding:.2rem .7rem; border:1px solid rgba(0,0,0,.10); font-size:.72rem; color:#111111; cursor:pointer; display:inline-flex; align-items:center; gap:.4rem; }
+    .chip:hover { border-color:rgba(0,0,0,.20); color:#2a2a2a; }
 </style>
 
 <script>
@@ -217,9 +217,9 @@
         document.getElementById('sum-p').textContent = num(p); document.getElementById('sum-c').textContent = num(c); document.getElementById('sum-f').textContent = num(f);
         document.getElementById('sum-empty').style.display = count ? 'none' : 'block';
         const kc = p * 4 + c * 4 + f * 9, bar = document.getElementById('sum-bar'); bar.innerHTML = '';
-        [['#22d3ee', p * 4], ['#5eead4', c * 4], ['#fbbf24', f * 9]].forEach(([col, v]) => { if (kc > 0) { const s = document.createElement('div'); s.style.cssText = 'height:100%;background:' + col + ';width:' + (v / kc * 100) + '%;transition:width .4s'; bar.appendChild(s); } });
+        [['#2a2a2a', p * 4], ['#6b6b6b', c * 4], ['#9a9a9a', f * 9]].forEach(([col, v]) => { if (kc > 0) { const s = document.createElement('div'); s.style.cssText = 'height:100%;background:' + col + ';width:' + (v / kc * 100) + '%;transition:width .4s'; bar.appendChild(s); } });
         const ul = document.getElementById('sum-groups'); ul.innerHTML = '';
-        Object.keys(per).forEach(k => { if (per[k] > 0) { const li = document.createElement('li'); li.className = 'flex justify-between'; li.innerHTML = '<span>' + groupNames[k] + '</span><span class="text-white">' + Math.round(per[k]) + ' cal</span>'; ul.appendChild(li); } });
+        Object.keys(per).forEach(k => { if (per[k] > 0) { const li = document.createElement('li'); li.className = 'flex justify-between'; li.innerHTML = '<span>' + groupNames[k] + '</span><span class="text-neutral-900">' + Math.round(per[k]) + ' cal</span>'; ul.appendChild(li); } });
     }
     summary();
 })();

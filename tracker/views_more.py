@@ -338,7 +338,7 @@ def manifest(request):
     data = {
         'name': 'Calorio', 'short_name': 'Calorio', 'description': 'Nutrition and activity tracker',
         'start_url': '/dashboard/', 'scope': '/', 'display': 'standalone',
-        'background_color': '#0a1214', 'theme_color': '#0a1214',
+        'background_color': '#f5f5f5', 'theme_color': '#f5f5f5',
         'icons': [
             {'src': '/static/tracker/icons/icon-192.png', 'sizes': '192x192', 'type': 'image/png'},
             {'src': '/static/tracker/icons/icon-512.png', 'sizes': '512x512', 'type': 'image/png'},

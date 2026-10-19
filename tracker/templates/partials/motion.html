@@ -4,23 +4,23 @@
     html { scroll-behavior:smooth; scroll-padding-top:88px; }
 
     /* Top progress bar */
-    #topbar { position:fixed; top:0; left:0; right:0; height:2px; z-index:10000; pointer-events:none; background:#a5f3fc;
-              box-shadow:0 0 10px #06b6d4; transform:scaleX(0); transform-origin:left; opacity:0; will-change:transform; }
+    #topbar { position:fixed; top:0; left:0; right:0; height:2px; z-index:10000; pointer-events:none; background:#404040;
+              box-shadow:0 0 10px #111111; transform:scaleX(0); transform-origin:left; opacity:0; will-change:transform; }
 
     /* Link underline that grows from the left */
     .ulink { position:relative; }
-    .ulink::after { content:""; position:absolute; left:0; right:0; bottom:-6px; height:1px; background:#06b6d4;
+    .ulink::after { content:""; position:absolute; left:0; right:0; bottom:-6px; height:1px; background:#111111;
                     transform:scaleX(0); transform-origin:left; transition:transform .45s var(--ease); }
     .ulink:hover::after, .ulink.active::after { transform:scaleX(1); }
 
     /* Toasts */
     #toasts { position:fixed; right:20px; bottom:20px; z-index:10001; display:flex; flex-direction:column; gap:10px; pointer-events:none; }
-    .toast { position:relative; overflow:hidden; min-width:240px; max-width:340px; padding:14px 18px 16px; background:#0f1d20; color:#e6f4f5;
-             border:1px solid rgba(6,182,212,.45); border-left:3px solid #06b6d4; border-radius:4px; box-shadow:0 16px 40px rgba(0,0,0,.5);
+    .toast { position:relative; overflow:hidden; min-width:240px; max-width:340px; padding:14px 18px 16px; background:#ffffff; color:#111111;
+             border:1px solid rgba(0,0,0,.20); border-left:3px solid #111111; border-radius:4px; box-shadow:0 16px 40px rgba(0,0,0,.5);
              font:500 13px 'Inter',sans-serif; transform:translateX(120%); opacity:0; transition:transform .6s var(--ease), opacity .6s var(--ease); }
     .toast.show { transform:none; opacity:1; }
     .toast.error { border-left-color:#ef4444; }
-    .toast i { position:absolute; left:0; bottom:0; height:2px; width:100%; background:#06b6d4; transform-origin:left; animation:toast-bar 4s linear forwards; }
+    .toast i { position:absolute; left:0; bottom:0; height:2px; width:100%; background:#111111; transform-origin:left; animation:toast-bar 4s linear forwards; }
     @keyframes toast-bar { to { transform:scaleX(0); } }
 
     /* Button loading state */
