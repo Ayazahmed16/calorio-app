@@ -14,6 +14,14 @@ import Weight from './pages/Weight';
 import Goals from './pages/Goals';
 import Foods from './pages/Foods';
 import FoodForm from './pages/FoodForm';
+import Landing from './pages/Landing';
+import Analytics from './pages/Analytics';
+import SavedMeals from './pages/SavedMeals';
+import Recipes from './pages/Recipes';
+import RecipeDetail from './pages/RecipeDetail';
+import Calculator from './pages/Calculator';
+import Account from './pages/Account';
+import Connections from './pages/Connections';
 
 function Protected({ children }) {
   const { user, booting } = useAuth();
@@ -30,6 +38,7 @@ function PublicOnly({ children }) {
 export default function App() {
   return (
     <Routes>
+      <Route path="/" element={<PublicOnly><Landing /></PublicOnly>} />
       <Route path="/login" element={<PublicOnly><Login /></PublicOnly>} />
       <Route path="/signup" element={<PublicOnly><Signup /></PublicOnly>} />
       <Route element={<Protected><Layout /></Protected>}>
@@ -45,8 +54,15 @@ export default function App() {
         <Route path="/foods" element={<Foods />} />
         <Route path="/foods/new" element={<FoodForm />} />
         <Route path="/foods/:id/edit" element={<FoodForm />} />
+        <Route path="/saved" element={<SavedMeals />} />
+        <Route path="/analytics" element={<Analytics />} />
+        <Route path="/recipes" element={<Recipes />} />
+        <Route path="/recipes/:id" element={<RecipeDetail />} />
+        <Route path="/calculator" element={<Calculator />} />
+        <Route path="/account" element={<Account />} />
+        <Route path="/connections" element={<Connections />} />
       </Route>
-      <Route path="*" element={<Navigate to="/dashboard" replace />} />
+      <Route path="*" element={<Navigate to="/" replace />} />
     </Routes>
   );
 }

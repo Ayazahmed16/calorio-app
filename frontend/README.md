@@ -4,8 +4,9 @@ A separate single-page app that talks to the Calorio backend through its JSON AP
 Built with React, Vite, React Router, TanStack Query and Tailwind CSS.
 
 ## Pages in this app
-Login / Sign up, Dashboard, Meals (list, edit, delete), Add Meal (builder), Activity, Weight, Goals, Foods.
-Analytics, Recipes, Saved meals and Account still live on the classic Django site and are linked from the sidebar.
+Landing, Login / Sign up, Dashboard, Meals (list, edit, delete), Add Meal (builder), Saved Meals, Activity, Weight,
+Analytics, Foods, Recipes (+ detail), Goals, Calculator, Account (profile, password, CSV export/import, API token) and
+Connections (Fitbit, Telegram, email, notifications).
 
 ## Run locally
 ```
@@ -33,10 +34,14 @@ npm run preview
 1. Import the GitHub repo in Vercel and set **Root Directory** to `frontend`.
 2. Framework preset: Vite (build `npm run build`, output `dist`).
 3. Add `VITE_API_URL` (your Render backend URL) under Settings, Environment Variables.
-4. Deploy, then add the resulting Vercel URL to the backend's `CORS_ALLOWED_ORIGINS` environment variable on Render.
+4. Deploy, then set `FRONTEND_URL` on the backend (Render) to the resulting Vercel URL. That allows the app to call the API and makes the old Django pages redirect to it.
 
 `vercel.json` rewrites every path to `index.html` so deep links and refreshes work.
 
 ## How auth works
 `POST /api/v1/auth/login/` returns a token that is stored in `localStorage` and sent as `Authorization: Token <key>`.
 A 401 from any call signs the user out. Logging out rotates the token on the server.
+
+## Fitbit
+Register `<backend URL>/api/v1/connections/fitbit/callback/` as the redirect URL in your Fitbit app. The login runs through the
+backend and sends the browser back to `/connections` here.

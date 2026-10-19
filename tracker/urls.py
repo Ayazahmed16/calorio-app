@@ -1,5 +1,5 @@
 from django.urls import path
-from . import api, views, views_integrations as vi, views_more
+from . import api, api2, views, views_integrations as vi, views_more
 
 urlpatterns = [
     path('', views.landing, name='landing'),
@@ -75,6 +75,30 @@ urlpatterns = [
     path('api/v1/foods/<int:pk>/', api.food_detail, name='api_food_detail'),
     path('api/v1/foods/<int:pk>/favorite/', api.food_favorite, name='api_food_favorite'),
     path('api/v1/analytics/', api.analytics, name='api_analytics'),
+
+    path('api/v1/saved/', api2.saved_meals, name='api_saved'),
+    path('api/v1/saved/<int:pk>/', api2.saved_meal_detail, name='api_saved_detail'),
+    path('api/v1/saved/<int:pk>/log/', api2.saved_meal_log, name='api_saved_log'),
+    path('api/v1/recipes/', api2.recipes, name='api_recipes'),
+    path('api/v1/recipes/<str:meal_id>/', api2.recipe_detail, name='api_recipe_detail'),
+    path('api/v1/recipes/<str:meal_id>/save/', api2.recipe_save, name='api_recipe_save'),
+    path('api/v1/calculator/', api2.calculator, name='api_calculator'),
+    path('api/v1/calculator/defaults/', api2.calculator_defaults, name='api_calculator_defaults'),
+    path('api/v1/account/', api2.account, name='api_account'),
+    path('api/v1/account/password/', api2.account_password, name='api_account_password'),
+    path('api/v1/account/token/', api2.account_token, name='api_account_token'),
+    path('api/v1/account/export/<str:kind>/', api2.account_export, name='api_account_export'),
+    path('api/v1/account/import/', api2.account_import, name='api_account_import'),
+    path('api/v1/connections/', api2.connections, name='api_connections'),
+    path('api/v1/connections/email/test/', api2.email_test, name='api_email_test'),
+    path('api/v1/connections/notifications/', api2.notifications, name='api_notifications'),
+    path('api/v1/connections/fitbit/connect/', api2.fitbit_connect, name='api_fitbit_connect'),
+    path('api/v1/connections/fitbit/callback/', api2.fitbit_callback, name='api_fitbit_callback'),
+    path('api/v1/connections/fitbit/sync/', api2.fitbit_sync, name='api_fitbit_sync'),
+    path('api/v1/connections/fitbit/disconnect/', api2.fitbit_disconnect, name='api_fitbit_disconnect'),
+    path('api/v1/connections/telegram/connect/', api2.telegram_connect, name='api_telegram_connect'),
+    path('api/v1/connections/telegram/disconnect/', api2.telegram_disconnect, name='api_telegram_disconnect'),
+    path('api/v1/connections/telegram/test/', api2.telegram_test, name='api_telegram_test'),
 
     # installable app
     path('manifest.webmanifest', views_more.manifest, name='manifest'),

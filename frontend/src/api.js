@@ -46,6 +46,32 @@ async function request(method, path, body) {
   return data;
 }
 
+/** Authenticated file download (CSV export): fetches with the token, then saves the blob. */
+export async function download(path, filename) {
+  const token = getToken();
+  let res;
+  try {
+    res = await fetch(`${API_URL}/api/v1${path}`, { headers: token ? { Authorization: `Token ${token}` } : {} });
+  } catch { throw new ApiError(0, { message: 'Cannot reach the server.' }); }
+  if (!res.ok) throw new ApiError(res.status, await res.json().catch(() => ({})));
+  const url = URL.createObjectURL(await res.blob());
+  const a = document.createElement('a');
+  a.href = url; a.download = filename; document.body.appendChild(a); a.click(); a.remove();
+  setTimeout(() => URL.revokeObjectURL(url), 1000);
+}
+
+/** Multipart upload (CSV import). The browser sets the Content-Type boundary itself. */
+export async function upload(path, formData) {
+  const token = getToken();
+  let res;
+  try {
+    res = await fetch(`${API_URL}/api/v1${path}`, { method: 'POST', headers: token ? { Authorization: `Token ${token}` } : {}, body: formData });
+  } catch { throw new ApiError(0, { message: 'Cannot reach the server.' }); }
+  const data = await res.json().catch(() => ({}));
+  if (!res.ok) throw new ApiError(res.status, data);
+  return data;
+}
+
 export const api = {
   get: (path) => request('GET', path),
   post: (path, body = {}) => request('POST', path, body),

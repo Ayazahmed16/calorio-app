@@ -67,6 +67,7 @@ INSTALLED_APPS = [
 MIDDLEWARE = [
     'django.middleware.security.SecurityMiddleware',
     'tracker.middleware.ApiCorsMiddleware',
+    'tracker.middleware.ClassicRedirectMiddleware',
     *(['whitenoise.middleware.WhiteNoiseMiddleware'] if HAS_WHITENOISE else []),
     'django.contrib.sessions.middleware.SessionMiddleware',
     'django.middleware.common.CommonMiddleware',
@@ -190,8 +191,13 @@ TELEGRAM_BOT_TOKEN = os.environ.get('TELEGRAM_BOT_TOKEN', '')
 TELEGRAM_BOT_USERNAME = os.environ.get('TELEGRAM_BOT_USERNAME', '')
 TELEGRAM_WEBHOOK_SECRET = os.environ.get('TELEGRAM_WEBHOOK_SECRET', '')
 
+# When set, the classic Django pages redirect to this React frontend (e.g. https://calorio.vercel.app).
+FRONTEND_URL = os.environ.get('FRONTEND_URL', '').strip().rstrip('/')
+
 # Origins allowed to call /api/ from a browser (the separately hosted React frontend).
 CORS_ALLOWED_ORIGINS = [o.strip().rstrip('/') for o in os.environ.get('CORS_ALLOWED_ORIGINS', '').split(',') if o.strip()]
+if FRONTEND_URL and FRONTEND_URL not in CORS_ALLOWED_ORIGINS:
+    CORS_ALLOWED_ORIGINS.append(FRONTEND_URL)
 if DEBUG:
     CORS_ALLOWED_ORIGINS += ['http://localhost:5173', 'http://127.0.0.1:5173', 'http://localhost:4173', 'http://127.0.0.1:4173']
 

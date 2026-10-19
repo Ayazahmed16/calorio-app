@@ -10,8 +10,8 @@ A calorie, nutrition and activity tracker built with Django.
 
 ## Frontend
 The project has two clients: the classic server-rendered Django pages, and a separate React app in `frontend/`
-that uses the JSON API (`/api/v1/`). See `frontend/README.md`. Set `CORS_ALLOWED_ORIGINS` on the backend to the
-frontend's URL so the browser may call the API.
+that uses the JSON API (`/api/v1/`). See `frontend/README.md`. Set `FRONTEND_URL` on the backend to the
+frontend's URL: the browser may then call the API, and the old Django pages redirect to the React app.
 
 ## Run locally
 ```
