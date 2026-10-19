@@ -4,7 +4,7 @@
 {% block content %}
 <div class="mb-10">
     <p class="font-mono text-[10px] uppercase tracking-widest text-neutral-500 mb-2">Body</p>
-    <h2 class="text-5xl font-black tracking-tighter text-neutral-900">Weight</h2>
+    <h2 class="text-4xl md:text-5xl font-black tracking-tighter text-neutral-900">Weight</h2>
 </div>
 
 <div class="grid grid-cols-1 md:grid-cols-3 gap-4 mb-8">
@@ -57,8 +57,8 @@
 <div class="bg-[#ffffff] border border-black/10 rounded-sm overflow-hidden shadow-sm">
     {% for e in entries %}
     <div style="--i:{{ forloop.counter0 }}" class="row-in flex items-center justify-between px-8 py-4 border-b border-black/10 hover:bg-black/5">
-        <span class="font-mono text-xs text-neutral-600">{{ e.date|date:"D, M j Y" }}</span>
-        <span class="text-neutral-900 font-semibold">{{ e.weight_kg|floatformat:"-1" }} kg</span>
+        <span class="font-mono text-xs text-neutral-600"><span class="hidden sm:inline">{{ e.date|date:"D, M j Y" }}</span><span class="sm:hidden">{{ e.date|date:"M j, Y" }}</span></span>
+        <span class="text-neutral-900 font-semibold whitespace-nowrap">{{ e.weight_kg|floatformat:"-1" }}&nbsp;kg</span>
         <a href="{% url 'delete_weight' e.pk %}" title="Delete" class="material-symbols-outlined text-neutral-500 hover:text-red-600" style="font-size:18px">delete</a>
     </div>
     {% empty %}

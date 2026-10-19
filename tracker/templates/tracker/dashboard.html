@@ -4,7 +4,7 @@
 <div class="mb-10 flex flex-wrap items-end justify-between gap-4">
     <div>
         <p class="font-mono text-[10px] uppercase tracking-widest text-neutral-500 mb-2">{% if is_today %}Today's Summary{% else %}Summary for {{ day|date:"D, M j Y" }}{% endif %}</p>
-        <h2 class="text-5xl md:text-6xl font-black tracking-tighter text-neutral-900">Welcome, {{ user.username }}</h2>
+        <h2 class="text-4xl md:text-6xl font-black tracking-tighter text-neutral-900">Welcome, {{ user.username }}</h2>
     </div>
     <div class="flex items-center border border-black/15 rounded-sm font-mono text-xs">
         <a href="?date={{ prev_day|date:'Y-m-d' }}" class="px-4 py-3 text-neutral-600 hover:text-black" title="Previous day"><span class="material-symbols-outlined" style="font-size:18px">chevron_left</span></a>
@@ -15,22 +15,22 @@
     </div>
 </div>
 
-<div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-4 mb-8">
+<div class="grid grid-cols-2 lg:grid-cols-4 gap-3 md:gap-4 mb-8">
     <div class="bg-[#ffffff] p-6 flex flex-col border border-black/10 spot">
         <span class="font-mono text-[10px] uppercase tracking-widest text-neutral-500">Total Calories</span>
-        <span class="text-4xl font-black tracking-tighter text-neutral-900 mt-4"><span data-count="{{ total_calories|floatformat:"-1" }}">{{ total_calories|floatformat:"-1" }}</span></span>
+        <span class="text-3xl md:text-4xl font-black tracking-tighter text-neutral-900 mt-4"><span data-count="{{ total_calories|floatformat:"-1" }}">{{ total_calories|floatformat:"-1" }}</span></span>
     </div>
     <div class="bg-[#ffffff] p-6 flex flex-col border border-black/10 spot">
         <span class="font-mono text-[10px] uppercase tracking-widest text-neutral-500">Total Protein</span>
-        <span class="text-4xl font-black tracking-tighter text-neutral-900 mt-4"><span data-count="{{ total_protein|floatformat:"-1" }}">{{ total_protein|floatformat:"-1" }}</span><span class="text-lg text-neutral-600 ml-1">g</span></span>
+        <span class="text-3xl md:text-4xl font-black tracking-tighter text-neutral-900 mt-4"><span data-count="{{ total_protein|floatformat:"-1" }}">{{ total_protein|floatformat:"-1" }}</span><span class="text-lg text-neutral-600 ml-1">g</span></span>
     </div>
     <div class="bg-[#ffffff] p-6 flex flex-col border border-black/10 spot">
         <span class="font-mono text-[10px] uppercase tracking-widest text-neutral-500">Steps</span>
-        <span class="text-4xl font-black tracking-tighter text-neutral-900 mt-4">{% if activity %}{{ activity.steps }}{% else %}&mdash;{% endif %}</span>
+        <span class="text-3xl md:text-4xl font-black tracking-tighter text-neutral-900 mt-4">{% if activity %}{{ activity.steps }}{% else %}&mdash;{% endif %}</span>
     </div>
     <div class="bg-[#ffffff] p-6 flex flex-col border border-black/10 spot">
         <span class="font-mono text-[10px] uppercase tracking-widest text-neutral-500">Calories Burned</span>
-        <span class="text-4xl font-black tracking-tighter text-neutral-900 mt-4">{% if activity %}{{ activity.calories_burned|floatformat:"-1" }}{% else %}&mdash;{% endif %}</span>
+        <span class="text-3xl md:text-4xl font-black tracking-tighter text-neutral-900 mt-4">{% if activity %}{{ activity.calories_burned|floatformat:"-1" }}{% else %}&mdash;{% endif %}</span>
     </div>
 </div>
 
@@ -61,7 +61,7 @@
 <div class="grid grid-cols-3 gap-4 mb-8">
     <div class="spot bg-[#ffffff] p-5 border border-black/10"><span class="font-mono text-[10px] uppercase tracking-widest text-neutral-500">Carbs</span><div class="text-2xl font-black text-neutral-900 mt-2">{{ total_carbs|floatformat:"-1" }}<span class="text-sm text-neutral-600 ml-1">g</span></div></div>
     <div class="spot bg-[#ffffff] p-5 border border-black/10"><span class="font-mono text-[10px] uppercase tracking-widest text-neutral-500">Fat</span><div class="text-2xl font-black text-neutral-900 mt-2">{{ total_fat|floatformat:"-1" }}<span class="text-sm text-neutral-600 ml-1">g</span></div></div>
-    <div class="spot bg-[#ffffff] p-5 border border-black/10"><span class="font-mono text-[10px] uppercase tracking-widest text-neutral-500">Net calories</span><div class="text-2xl font-black text-neutral-900 mt-2">{{ net_calories|floatformat:"-1" }}</div></div>
+    <div class="spot bg-[#ffffff] p-5 border border-black/10"><span class="font-mono text-[10px] uppercase tracking-widest text-neutral-500">Net<span class="hidden sm:inline"> calories</span></span><div class="text-2xl font-black text-neutral-900 mt-2">{{ net_calories|floatformat:"-1" }}</div></div>
 </div>
 
 <div class="spot bg-[#ffffff] border border-black/10 p-6 mb-8">
@@ -91,7 +91,7 @@
             <p class="text-neutral-900 font-medium flex items-center gap-3">{% include "partials/food_thumb.html" with food=meal.food size=36 %}{{ meal.food.name }}</p>
             <p class="font-mono text-[10px] uppercase tracking-widest text-neutral-500 mt-1">{{ meal.meal_type }} &middot; {{ meal.quantity_grams }}g</p>
         </div>
-        <span class="font-mono text-sm text-neutral-900">{{ meal.total_calories|floatformat:"-1" }} cal</span>
+        <span class="whitespace-nowrap font-mono text-sm text-neutral-900">{{ meal.total_calories|floatformat:"-1" }}&nbsp;cal</span>
     </div>
     {% empty %}
     <p class="px-8 py-8 font-mono text-xs text-neutral-500">{% if is_today %}No meals logged today.{% else %}No meals logged this day.{% endif %}</p>

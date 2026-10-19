@@ -80,7 +80,10 @@
             @keyframes vt-leave { to { opacity:0; transform:translateY(-8px); } }
             @keyframes vt-enter { from { opacity:0; transform:translateY(18px); } }
         }
-                /* dropdown groups in the sidebar */
+                /* polish: no wrapped button labels, comfortable tap targets for icon links */
+        main a[class*="bg-neutral-900"], main button[class*="bg-neutral-900"] { white-space:nowrap; }
+        main a.material-symbols-outlined { padding:9px; margin:-9px; }
+        /* dropdown groups in the sidebar */
         #sidenav > a.nav-link { flex:0 0 auto; }
         @media (max-width:767px) { .nav-sub-inner .nav-link { padding-left:.75rem !important; padding-right:.75rem !important; } }
 

@@ -4,7 +4,7 @@
 {% block content %}
 <div class="mb-8">
     <p class="font-mono text-[10px] uppercase tracking-widest text-neutral-500 mb-2">New Entry</p>
-    <h2 class="text-5xl font-black tracking-tighter text-neutral-900">Add a Meal</h2>
+    <h2 class="text-4xl md:text-5xl font-black tracking-tighter text-neutral-900">Add a Meal</h2>
     <p class="mt-3 text-sm text-neutral-600 max-w-xl">Build your plate by group. Add as many foods as you like under Protein, Carbs and Fats, then save them together as one meal.</p>
 </div>
 
@@ -50,7 +50,7 @@
     <aside class="bg-[#ffffff] border border-black/15 p-6 shadow-sm xl:sticky xl:top-24">
         <h3 class="text-lg font-bold text-neutral-900 mb-1">Meal summary</h3>
         <p id="sum-empty" class="font-mono text-[11px] text-neutral-500 mb-4">Pick a food and enter grams to see totals.</p>
-        <div class="text-5xl font-black tracking-tighter text-neutral-900"><span id="sum-cal">0</span><span class="text-lg text-neutral-500 ml-2">cal</span></div>
+        <div class="text-4xl md:text-5xl font-black tracking-tighter text-neutral-900"><span id="sum-cal">0</span><span class="text-lg text-neutral-500 ml-2">cal</span></div>
         <div class="grid grid-cols-3 gap-3 mt-5 mb-5 font-mono">
             <div><div class="text-[10px] uppercase tracking-widest text-neutral-500">Protein</div><div class="text-neutral-900 text-lg"><span id="sum-p">0</span>g</div></div>
             <div><div class="text-[10px] uppercase tracking-widest text-neutral-500">Carbs</div><div class="text-neutral-900 text-lg"><span id="sum-c">0</span>g</div></div>
@@ -121,7 +121,7 @@
             const row = document.createElement('div'); row.className = 'brow';
             const combo = document.createElement('div'); combo.className = 'combo';
             const text = document.createElement('input'); text.type = 'text'; text.className = 'field'; text.autocomplete = 'off';
-            text.placeholder = 'Search ' + key + ' foods...'; text.setAttribute('role', 'combobox');
+            text.placeholder = 'Search foods...'; text.setAttribute('role', 'combobox');
             const hid = document.createElement('input'); hid.type = 'hidden'; hid.name = key + '_food';
             const list = document.createElement('div'); list.className = 'combo-list'; list.setAttribute('role', 'listbox');
             combo.append(text, hid, list);
