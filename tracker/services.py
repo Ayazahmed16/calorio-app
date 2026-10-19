@@ -187,3 +187,66 @@ def find_food_image(name):
     if not any(k in blurb for k in _FOODISH):
         return ''                       # avoid matching an unrelated article (a band, a company, a place)
     return _https((data.get('thumbnail') or {}).get('source'))
+
+
+# ------------------------------------------------------------- analytics
+
+def analytics_data(user, days):
+    """Per-day calories plus averages and macro split for the last `days` days (7, 30 or 90)."""
+    from .models import ActivityEntry, DailyGoal
+    end = timezone.localdate()
+    start = end - timedelta(days=days - 1)
+    per_day = {start + timedelta(days=i): {'cal': 0.0, 'protein': 0.0, 'carbs': 0.0, 'fat': 0.0, 'steps': 0, 'burned': 0.0}
+               for i in range(days)}
+
+    meals = MealEntry.objects.filter(user=user, date__range=(start, end)).select_related('food')
+    for m in meals:
+        d = per_day[m.date]
+        d['cal'] += m.total_calories()
+        d['protein'] += m.total_protein()
+        d['carbs'] += m.total_carbs()
+        d['fat'] += m.total_fat()
+    for a in ActivityEntry.objects.filter(user=user, date__range=(start, end)):
+        d = per_day[a.date]
+        d['steps'] += a.steps
+        d['burned'] += a.calories_burned
+
+    goal, _ = DailyGoal.objects.get_or_create(user=user)
+    max_cal = max((d['cal'] for d in per_day.values()), default=0) or 1
+    rows = []
+    for day, d in per_day.items():
+        rows.append({
+            'date': day,
+            'label': day.strftime('%a') if days == 7 else day.strftime('%d'),
+            'cal': round(d['cal']),
+            'height': max(round(d['cal'] / max_cal * 100), 3) if d['cal'] else 0,
+            'over': d['cal'] > goal.target_calories,
+        })
+
+    logged = [d for d in per_day.values() if d['cal'] > 0]
+    n = len(logged)
+    tot = lambda key: sum(d[key] for d in per_day.values())  # noqa: E731
+    p_kcal, c_kcal, f_kcal = tot('protein') * 4, tot('carbs') * 4, tot('fat') * 9
+    macro_total = p_kcal + c_kcal + f_kcal
+
+    def share(v):
+        return round(v / macro_total * 100) if macro_total else 0
+
+    return {
+        'days': days,
+        'rows': rows,
+        'show_labels': days <= 30,
+        'days_logged': n,
+        'avg_calories': round(tot('cal') / n) if n else 0,
+        'avg_protein': round(tot('protein') / n, 1) if n else 0,
+        'avg_steps': round(tot('steps') / days),
+        'total_burned': round(tot('burned')),
+        'on_target': sum(1 for d in logged if d['cal'] <= goal.target_calories),
+        'best_steps': max((d['steps'] for d in per_day.values()), default=0),
+        'protein_share': share(p_kcal),
+        'carbs_share': share(c_kcal),
+        'fat_share': share(f_kcal),
+        'goal': goal,
+        'range_start': start,
+        'range_end': end,
+    }

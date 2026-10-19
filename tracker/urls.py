@@ -55,14 +55,26 @@ urlpatterns = [
     path('recipes/', vi.recipes, name='recipes'),
     path('recipes/<str:meal_id>/', vi.recipe_detail, name='recipe_detail'),
 
-    # JSON API
+    # JSON API (used by the React frontend)
+    path('api/v1/auth/signup/', api.auth_signup, name='api_auth_signup'),
+    path('api/v1/auth/login/', api.auth_login, name='api_auth_login'),
+    path('api/v1/auth/logout/', api.auth_logout, name='api_auth_logout'),
+    path('api/v1/auth/me/', api.auth_me, name='api_auth_me'),
+    path('api/v1/dashboard/', api.dashboard, name='api_dashboard'),
     path('api/v1/summary/', api.summary, name='api_summary'),
     path('api/v1/meals/', api.meals, name='api_meals'),
     path('api/v1/meals/<int:pk>/', api.meal_detail, name='api_meal_detail'),
     path('api/v1/activity/', api.activity, name='api_activity'),
+    path('api/v1/activity/<int:pk>/', api.activity_detail, name='api_activity_detail'),
     path('api/v1/weight/', api.weight, name='api_weight'),
+    path('api/v1/weight/<int:pk>/', api.weight_detail, name='api_weight_detail'),
     path('api/v1/water/', api.water, name='api_water'),
+    path('api/v1/goals/', api.goals, name='api_goals'),
     path('api/v1/foods/', api.foods, name='api_foods'),
+    path('api/v1/foods/lookup/', api.food_lookup, name='api_food_lookup'),
+    path('api/v1/foods/<int:pk>/', api.food_detail, name='api_food_detail'),
+    path('api/v1/foods/<int:pk>/favorite/', api.food_favorite, name='api_food_favorite'),
+    path('api/v1/analytics/', api.analytics, name='api_analytics'),
 
     # installable app
     path('manifest.webmanifest', views_more.manifest, name='manifest'),

@@ -8,6 +8,11 @@ A calorie, nutrition and activity tracker built with Django.
 - Per-user custom foods, CSV import/export, JSON API with token auth, installable (PWA)
 - Integrations: USDA FoodData Central, Open Food Facts, TheMealDB recipes, Fitbit sync, Telegram reminders, SMTP email
 
+## Frontend
+The project has two clients: the classic server-rendered Django pages, and a separate React app in `frontend/`
+that uses the JSON API (`/api/v1/`). See `frontend/README.md`. Set `CORS_ALLOWED_ORIGINS` on the backend to the
+frontend's URL so the browser may call the API.
+
 ## Run locally
 ```
 python -m venv .venv
